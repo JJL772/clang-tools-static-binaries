@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         clang-version: [ 12.0.1, 13, 14, 15, 16, 17 ]
-        os: [ linux, macosx, windows ]
+        os: [ linux, windows ]
         include:
           - clang-version: 12.0.1
             release: llvm-project-12.0.1.src
@@ -30,13 +30,6 @@ jobs:
             bindir: '/build/bin'
             dotexe: ''
             shacmd: 'sha512sum'
-          - os: macosx
-            runner: macos-11
-            os-cmake-args: '-DCMAKE_CXX_FLAGS="-static-libgcc -static-libstdc++ -flto" -DCMAKE_OSX_DEPLOYMENT_TARGET=10.15 ${POSIX_CMAKE_ARGS}'
-            build-args: '-j$(sysctl -n hw.ncpu)'
-            bindir: '/build/bin'
-            dotexe: ''
-            shacmd: 'shasum -a512'
           - os: windows
             runner: windows-latest
             os-cmake-args: '-Thost=x64 -DCMAKE_CXX_FLAGS="/MP /std:c++14" -DLLVM_USE_CRT_MINSIZEREL="MT"'
